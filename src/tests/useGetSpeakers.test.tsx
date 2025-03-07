@@ -1,8 +1,28 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, RenderHookResult, waitFor } from '@testing-library/react';
 import { act } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; // Import these correctly
+import { QueryClient, QueryClientProvider, UseQueryResult } from '@tanstack/react-query'; // Import these correctly
 import { getSpeakers, useGetSpeakers } from '../hooks/useGetSpeakers';
 import { Speaker } from '../models/Speakers';
+
+
+const waitIsNotLoading = async (renderHookResult: RenderHookResult<UseQueryResult, unknown>) => {
+  return new Promise<void>((resolve) => {
+    const interval = setInterval(() => {
+      const { result: { current: { isLoading } } } = renderHookResult;
+      if (isLoading === false) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 500);
+  });
+}
+
+const waitForLoadingToFinish = async (renderHookResult: RenderHookResult<UseQueryResult, unknown>) => {
+  const { result: { current: { refetch, isLoading } } } = renderHookResult
+  await waitIsNotLoading(renderHookResult)
+  await refetch()
+  await waitIsNotLoading(renderHookResult)
+};
 
 describe('getSpeakers (Real API)', () => {
   //Increase timeout for test
@@ -35,25 +55,19 @@ describe('getSpeakers (Real API)', () => {
 
   test('useGetSpeakers', async () => {
     // Act
-    const {result} = renderHook(() => useGetSpeakers(), { wrapper })
-    const { current: { refetch } } = result
-
+    const renderHookResult = renderHook(() => useGetSpeakers(), { wrapper })
     await act(async () => {
-      await refetch();
-      console.log("refetched")
+      await waitForLoadingToFinish(renderHookResult)
     })
 
-    await waitFor(() => {
-      const { current: { isLoading } } = result
-      expect(isLoading).toBe(false)
-    })
+    const { result: {current: { error, data }} } = renderHookResult
 
-    const { current: { error, data } } = result
     if(error){
       expect(error).toBeUndefined()
     }
     if (data) {
       expect(Array.isArray(data)).toBe(true)
+      console.log(`speakers: ${data.length}`)
       expect(data.length).toBeGreaterThan(0)
     } else {
       expect(data).toBeDefined()
