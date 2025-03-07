@@ -1,0 +1,32 @@
+{
+  "name": "voicebox-sdk",
+  "version": "1.0.0",
+  "description": "Voicevox SDK",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "voicevox",
+    "sdk"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "your repository url"
+  },
+  "devDependencies": {
+    "@tanstack/react-query": "^5.18.1",
+    "@types/node": "^20.11.19",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@aspida/axios": "^1.14.0",
+    "aspida": "^1.14.0",
+    "axios": "^1.6.7"
+  },
+  "packageManager": "pnpm@9.12.2+sha512.22721b3a11f81661ae1ec68ce1a7b879425a1ca5b991c975b074ac220b187ce56c708fe5db69f4c962c989452eee76c82877f4ee80f474cebd61ee13461b6228"
+}

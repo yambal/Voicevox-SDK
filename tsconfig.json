@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2019", // 出力するJavaScriptのバージョン（Node.jsのサポートバージョンに合わせて変更）
+    "module": "CommonJS", // 出力するモジュールの種類（Node.jsではCommonJSが一般的）
+    "lib": ["ES2019"], // 使用する標準ライブラリ（Node.js環境ではDOMは不要）
+    "outDir": "./dist", // ビルドされたファイルを格納するディレクトリ
+    "strict": true, // 厳格な型チェックを有効にする
+    "esModuleInterop": true, // CommonJSとESモジュールの相互運用を有効にする
+    "skipLibCheck": true, // 型定義ファイルのチェックをスキップ
+    "forceConsistentCasingInFileNames": true, // ファイル名の大文字小文字を区別する
+    "declaration": true, // 型定義ファイル(.d.ts)を生成する
+    "moduleResolution": "node",
+    "sourceMap": true, // ソースマップを生成
+    "jsx": "react-jsx" // reactで使用するなら追加
+  },
+  "include": [
+    "src" // コンパイル対象のディレクトリ
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
