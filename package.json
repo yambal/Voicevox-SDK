@@ -5,7 +5,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build:api": "aspida build",
+    "build:tsc": "tsc",
+    "test": "jest",
+    "build": "pnpm run build:api && pnpm run build:tsc && pnpm run test",
     "prepare": "npm run build"
   },
   "keywords": [
@@ -20,8 +23,11 @@
   },
   "devDependencies": {
     "@tanstack/react-query": "^5.18.1",
+    "@types/jest": "^29.5.14",
     "@types/node": "^20.11.19",
-    "typescript": "^5.3.3"
+    "jest": "^29.7.0",
+    "typescript": "^5.3.3",
+    "ts-jest": "^29.2.6"
   },
   "dependencies": {
     "@aspida/axios": "^1.14.0",
