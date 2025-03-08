@@ -1,6 +1,6 @@
 {
   "name": "voicebox-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A TypeScript SDK for interacting with the Voicebox API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,7 +15,7 @@
     "test": "jest",
     "build": "pnpm run build:api && pnpm run build:tsc && pnpm run test",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run aspida build && npm run tsc"
+    "prepublishOnly": "npm run build:api build && npm run build:tsc"
   },
   "keywords": [
     "voicevox",
