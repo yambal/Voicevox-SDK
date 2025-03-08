@@ -11,15 +11,9 @@ describe('getAudioQuery (Real API)', () => {
   const text = "本日は晴天なり"
   let speaker = 0
 
-  test('getSpeakers for getAudioQuery', async () => {
+  beforeAll(async () => {
     const result: Speaker[] = await getSpeakers()
-
-    const speakerName = result[0].name
-    const speakerStyleName = result[0].styles[0].name
-    const speakerStyleId = result[0].styles[0].id
-
-    console.log(`test speaker: ${speakerName}-${speakerStyleName}(${speakerStyleId}) 「${text}」`)
-    speaker = speakerStyleId
+    speaker = result[0].styles[0].id
   })
 
   test('getAudioQuery', async () => {
@@ -45,11 +39,11 @@ describe('getAudioQuery (Real API)', () => {
   test('useGetAudioQuery', async () => {
     const wrapper = useTanstackQueryWrapper()
 
-    // Act
     const renderHookResult = renderHook(() => useGetAudioQuery({
       text,
       speaker
     }), { wrapper })
+
     await act(async () => {
       await waitForLoadingToFinish(renderHookResult)
     })
