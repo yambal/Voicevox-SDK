@@ -35,6 +35,8 @@ describe('getSpeakers (Real API)', () => {
       await waitForLoadingToFinish(renderHookResult)
     })
 
+
+    
     const { result: {current: { error, data }} } = renderHookResult
 
     if(error){

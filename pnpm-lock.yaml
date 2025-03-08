@@ -11,6 +11,9 @@ importers:
       '@aspida/axios':
         specifier: ^1.14.0
         version: 1.14.0(aspida@1.14.0)(axios@1.8.2)
+      '@maruware/blob-to-base64':
+        specifier: ^0.0.8
+        version: 0.0.8
       aspida:
         specifier: ^1.14.0
         version: 1.14.0
@@ -323,6 +326,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@maruware/blob-to-base64@0.0.8':
+    resolution: {integrity: sha512-HBddnyU2KSCDsWGWA7saZP1qXNgwrdJLmPmIz9rzsCoHHYCBrCH98/BbT5Qi4pxgL69qeercJ61Z0uZspz+Hvw==}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -1994,6 +2000,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@maruware/blob-to-base64@0.0.8': {}
 
   '@sinclair/typebox@0.27.8': {}
 

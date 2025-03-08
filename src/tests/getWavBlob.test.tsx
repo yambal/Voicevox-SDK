@@ -5,7 +5,7 @@ import { Speaker } from '../models/Speakers'
 import { AudioQuery } from '../models/AudioQuery'
 import { getAudioQuery } from '..'
 import { useTanstackQueryWrapper, waitForLoadingToFinish } from './uril/react'
-import { getWavBlob, useGetWavBlob } from '../'
+import { getWavBlob, useGetWavBlob } from '..'
 
 describe('getWavBlob (Real API)', () => {
   jest.setTimeout(10000); // 10 seconds timeout

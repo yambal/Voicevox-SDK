@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
 import { act } from '@testing-library/react'
-import { getSpeakers, getWavBlobs, useGetWavBlobs, getAudioQuery } from '../'
+import { getSpeakers, getWavBlobs, useGetWavBlobs, getAudioQuery } from '..'
 import { Speaker } from '../models/Speakers'
 import { AudioQuery } from '../models/AudioQuery'
 import { useTanstackQueryWrapper, waitForLoadingToFinish } from './uril/react'
