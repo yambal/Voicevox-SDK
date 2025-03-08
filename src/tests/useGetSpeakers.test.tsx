@@ -1,7 +1,7 @@
 import { renderHook, RenderHookResult, waitFor } from '@testing-library/react';
 import { act } from '@testing-library/react';
 import { QueryClient, QueryClientProvider, UseQueryResult } from '@tanstack/react-query'; // Import these correctly
-import { getSpeakers, useGetSpeakers } from '../hooks/useGetSpeakers';
+import { getSpeakers, useGetSpeakers } from '../';
 import { Speaker } from '../models/Speakers';
 
 
@@ -72,6 +72,5 @@ describe('getSpeakers (Real API)', () => {
     } else {
       expect(data).toBeDefined()
     }
-
   });
 });
