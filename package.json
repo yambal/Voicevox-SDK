@@ -1,25 +1,31 @@
 {
   "name": "voicebox-sdk",
   "version": "0.0.1",
-  "description": "Voicevox SDK",
+  "description": "A TypeScript SDK for interacting with the Voicebox API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build:api": "aspida build",
     "build:tsc": "tsc",
     "test": "jest",
     "build": "pnpm run build:api && pnpm run build:tsc && pnpm run test",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run aspida build && npm run tsc"
   },
   "keywords": [
     "voicevox",
     "sdk"
   ],
-  "author": "Your Name",
+  "author": "June YAMAMOTO",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "your repository url"
+    "url": "https://github.com/yambal/Voicevox-SDK"
   },
   "devDependencies": {
     "@tanstack/react-query": "^5.18.1",
