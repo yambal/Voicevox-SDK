@@ -1,7 +1,8 @@
 import aspida from "@aspida/axios"
 import api from "../api/$api"
-import { useQuery } from "@tanstack/react-query";
 import { blobToBase64 } from "@maruware/blob-to-base64";
+import { useState } from "react";
+import { UseGetReturnBase } from "../tests/uril/useGetUtil";
 
 const client = api(aspida());
 
@@ -19,16 +20,37 @@ export const getConnectetWavBlob = async ({
   })
 }
 
-export const useGetConnectetWevBlob = ({
-  blobs
-}:GetConnectetWavBlobProps) => {
- return useQuery({
-    queryKey: ['getWavBlob'],
-    queryFn: async():
-      Promise<Blob> => {
-        return await getConnectetWavBlob({
-          blobs
-        })
-      }
-  })
+export type UseGetConnectetWevBlobReturn = {
+  get: (props: GetConnectetWavBlobProps) => void
+  blob: Blob | undefined
+} & UseGetReturnBase
+
+export const useGetConnectetWevBlob = () => {
+  const [isGetting, setIsGetting] = useState<Boolean>(false)
+  const [blob, setBlob] = useState<Blob|undefined>()
+  const [error, setError] = useState<any>()
+
+  const get = ({
+    blobs
+  }: GetConnectetWavBlobProps) => {
+    setIsGetting(true)
+    setError(undefined)
+    setBlob(undefined)
+    getConnectetWavBlob({
+      blobs
+    }).then((b) => {
+      setBlob(b)
+    }).catch((error) => {
+      setError(error)
+    }).finally(() => {
+      setIsGetting(false)
+    })
+  }
+
+ return {
+  get,
+  isGetting,
+  error,
+  blob
+ } as UseGetConnectetWevBlobReturn
 }

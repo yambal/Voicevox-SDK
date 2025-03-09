@@ -1,9 +1,14 @@
-import { getSpeakers, getAudioQuery, getWavBlob, getConnectetWavBlob, useGetConnectetWevBlob } from '..'
-import { Speaker } from '../models/Speakers'
-import { AudioQuery } from '../models/AudioQuery'
-import { useTanstackQueryWrapper, waitForLoadingToFinish } from './uril/react';
-import { renderHook } from '@testing-library/react';
-import { act } from '@testing-library/react'
+import {
+  getAudioQuery,
+  AudioQuery,
+  Speaker,
+  getSpeakers,
+  getWavBlob,
+  getConnectetWavBlob,
+  useGetConnectetWevBlob
+} from '../'
+import { act, renderHook } from '@testing-library/react'
+import { waitisNotGetting } from './uril/useGetUtil';
 
 describe('getConnectetWevBlob (Real API)', () => {
   jest.setTimeout(20000); // 10 seconds timeout
@@ -45,24 +50,27 @@ describe('getConnectetWevBlob (Real API)', () => {
     console.log(wavBlob.type)
   })
 
-
-  test('useGetConnectetWevBlobs', async () => {
-    const wrapper = useTanstackQueryWrapper()
-    const renderHookResult = renderHook(() => useGetConnectetWevBlob({
-      blobs: [blobA, blobB]
-    }), { wrapper })
+  test('useGetConnectetWevBlob', async () => {
+    const renderHookResult = renderHook(() => useGetConnectetWevBlob())
+    await waitisNotGetting(renderHookResult)
     await act(async () => {
-      await waitForLoadingToFinish(renderHookResult)
+      const {result: { current: { get }}} = renderHookResult
+      get({
+        blobs: [blobA, blobB]
+      })
+      await waitisNotGetting(renderHookResult)
     })
-    const { result: {current: { error, data }} } = renderHookResult
+    const { result: {current: { error, blob }} } = renderHookResult
+
     if(error){
       expect(error).toBeUndefined()
     }
-    if (data) {
-      expect(data instanceof Blob).toBe(true)
-      expect(data.constructor.name).toBe("Blob")
+
+    if (blob) {
+      expect(blob instanceof Blob).toBe(true)
+      expect(blob.constructor.name).toBe("Blob")
     } else {
-      expect(data).toBeDefined()
+      expect(blob).toBeDefined()
     }
   })
 })

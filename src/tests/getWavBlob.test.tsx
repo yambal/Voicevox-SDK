@@ -1,11 +1,14 @@
 import { renderHook } from '@testing-library/react'
 import { act } from '@testing-library/react'
-import { getSpeakers } from '..'
-import { Speaker } from '../models/Speakers'
-import { AudioQuery } from '../models/AudioQuery'
-import { getAudioQuery } from '..'
-import { useTanstackQueryWrapper, waitForLoadingToFinish } from './uril/react'
-import { getWavBlob, useGetWavBlob } from '..'
+import {
+  getAudioQuery,
+  getWavBlob,
+  useGetWavBlob,
+  Speaker,
+  AudioQuery,
+  getSpeakers
+} from '..'
+import { waitisNotGetting } from './uril/useGetUtil'
 
 describe('getWavBlob (Real API)', () => {
   jest.setTimeout(10000); // 10 seconds timeout
@@ -33,23 +36,25 @@ describe('getWavBlob (Real API)', () => {
   })
 
   test('useGetWavBlob', async () => {
-    const wrapper = useTanstackQueryWrapper()
-    const renderHookResult = renderHook(() => useGetWavBlob({
-      speaker,
-      audioQuery: audioQuery
-    }), { wrapper })
+    const renderHookResult = renderHook(() => useGetWavBlob())
+    await waitisNotGetting(renderHookResult)
     await act(async () => {
-      await waitForLoadingToFinish(renderHookResult)
+      const {result: { current: { get }}} = renderHookResult
+      get({
+        speaker,
+        audioQuery
+      })
+      await waitisNotGetting(renderHookResult)
     })
-    const { result: {current: { error, data }} } = renderHookResult
+    const { result: {current: { error, blob }} } = renderHookResult
     if(error){
       expect(error).toBeUndefined()
     }
-    if (data) {
-      expect(data instanceof Blob).toBe(true)
-      expect(data.constructor.name).toBe("Blob")
+    if (blob) {
+      expect(blob instanceof Blob).toBe(true)
+      expect(blob.constructor.name).toBe("Blob")
     } else {
-      expect(data).toBeDefined()
+      expect(blob).toBeDefined()
     }
   })
 })

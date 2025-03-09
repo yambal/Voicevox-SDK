@@ -1,10 +1,13 @@
 import { renderHook } from '@testing-library/react'
 import { act } from '@testing-library/react'
-import { getSpeakers } from '../'
-import { Speaker } from '../models/Speakers'
-import { AudioQuery } from '../models/AudioQuery'
-import { getAudioQuery, useGetAudioQuery } from '../'
-import { useTanstackQueryWrapper, waitForLoadingToFinish } from './uril/react'
+import {
+  getAudioQuery,
+  useGetAudioQuery,
+  AudioQuery,
+  Speaker,
+  getSpeakers
+} from '../'
+import { waitisNotGetting } from './uril/useGetUtil'
 
 describe('getAudioQuery (Real API)', () => {
   jest.setTimeout(10000); // 10 seconds timeout
@@ -34,29 +37,28 @@ describe('getAudioQuery (Real API)', () => {
     expect(audioAuery).toHaveProperty('outputSamplingRate')
     expect(audioAuery).toHaveProperty('outputStereo')
     expect(audioAuery).toHaveProperty('kana')
-  });
+  })
 
   test('useGetAudioQuery', async () => {
-    const wrapper = useTanstackQueryWrapper()
-
-    const renderHookResult = renderHook(() => useGetAudioQuery({
-      text,
-      speaker
-    }), { wrapper })
-
+    const renderHookResult = renderHook(() => useGetAudioQuery())
+    await waitisNotGetting(renderHookResult)
     await act(async () => {
-      await waitForLoadingToFinish(renderHookResult)
+      const {result: { current: { get }}} = renderHookResult
+      get({
+        text,
+        speaker
+      })
+      await waitisNotGetting(renderHookResult)
     })
-
-    const { result: {current: { error, data }} } = renderHookResult
+    const { result: {current: { error, audioQuery }} } = renderHookResult
 
     if(error){
       expect(error).toBeUndefined()
     }
-    if (data) {
-      expect(data).toHaveProperty('accent_phrases')
+    if (audioQuery) {
+      expect(audioQuery).toHaveProperty('accent_phrases')
     } else {
-      expect(data).toBeDefined()
+      expect(audioQuery).toBeDefined()
     }
-  });
-});
+  })
+})

@@ -1,7 +1,8 @@
 import aspida from "@aspida/axios"
 import api from "../api/$api"
-import { useQuery } from "@tanstack/react-query";
 import { AudioQuery } from "../models/AudioQuery";
+import { useState } from "react";
+import { UseGetReturnBase } from "../tests/uril/useGetUtil";
 
 const client = api(aspida());
 
@@ -27,22 +28,48 @@ export const getWavBlob = async ({
   })
 }
 
-export const useGetWavBlob = ({
-  speaker,
-  audioQuery,
-  core_version,
-  enable_interrogative_upspeak
-}:GetWavBlobProps) => {
- return useQuery({
-    queryKey: ['getWavBlob'],
-    queryFn: async():
-      Promise<Blob> => {
-        return await getWavBlob({
-          speaker,
-          audioQuery,
-          core_version,
-          enable_interrogative_upspeak
-        })
-      }
-  })
+export type UseGetWebBlobReturn = {
+  get: ({
+    speaker,
+    audioQuery,
+    core_version,
+    enable_interrogative_upspeak
+  }: GetWavBlobProps) => void
+  blob: Blob|undefined
+} & UseGetReturnBase
+
+export const useGetWavBlob = () => {
+  const [isGetting, setIsGetting] = useState<Boolean>(false)
+  const [blob, setBlob] = useState<Blob|undefined>()
+  const [error, setError] = useState<any>()
+
+  const get = ({
+    speaker,
+    audioQuery,
+    core_version,
+    enable_interrogative_upspeak
+  }: GetWavBlobProps) => {
+    setIsGetting(true)
+    setError(undefined)
+    setBlob(undefined)
+    getWavBlob({
+      speaker,
+      audioQuery,
+      core_version,
+      enable_interrogative_upspeak
+    }).then((b) => {
+      setBlob(b)
+    }).catch((error) => {
+      setError(error)
+    }).finally(() => {
+      setIsGetting(false)
+    })
+  }
+
+ return {
+  get,
+  isGetting,
+  error,
+  blob
+ } as UseGetWebBlobReturn
 }

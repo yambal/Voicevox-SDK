@@ -1,7 +1,8 @@
 import aspida from "@aspida/axios"
 import api from "../api/$api"
-import { useQuery } from "@tanstack/react-query";
 import { AudioQuery } from "../models/AudioQuery";
+import { useState } from "react";
+import { UseGetReturnBase } from "../tests/uril/useGetUtil";
 
 const client = api(aspida());
 
@@ -22,21 +23,45 @@ export const getAudioQuery = async ({
   }})
 }
 
+export type UseGetAudioQueryReturn = {
+  get: ({
+    text,
+    speaker,
+    core_version
+  }: GetAudioQueryProps) => void
+  audioQuery?: AudioQuery
+} & UseGetReturnBase
 
-export const useGetAudioQuery = ({
-  text,
-  speaker,
-  core_version
-}:GetAudioQueryProps) => {
- return useQuery({
-    queryKey: ['audioQuery'],
-    queryFn: async():
-      Promise<AudioQuery> => {
-        return await getAudioQuery({
-          text,
-          speaker,
-          core_version
-        })
-      }
-  })
+export const useGetAudioQuery = () => {
+  const [isGetting, setIsGetting] = useState<Boolean>(false)
+  const [audioQuery, setAudioQuery] = useState<AudioQuery|undefined>()
+  const [error, setError] = useState<any>()
+
+  const get = ({
+    text,
+    speaker,
+    core_version
+  }: GetAudioQueryProps) => {
+    setIsGetting(true)
+    setError(undefined)
+    setAudioQuery(undefined)
+    getAudioQuery({
+      text,
+      speaker,
+      core_version
+    }).then((aq) => {
+      setAudioQuery(aq)
+    }).catch((error) => {
+      setError(error)
+    }).finally(() => {
+      setIsGetting(false)
+    })
+  }
+
+ return {
+  get,
+  isGetting,
+  error,
+  audioQuery
+ } as UseGetAudioQueryReturn
 }

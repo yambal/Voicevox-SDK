@@ -1,8 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import { act } from '@testing-library/react'
-import { getSpeakers, useGetSpeakers } from '../'
-import { Speaker } from '../models/Speakers'
-import { useTanstackQueryWrapper, waitForLoadingToFinish } from './uril/react'
+import { getSpeakers, useGetSpeakers, Speaker } from '..'
+import { waitisNotGetting } from './uril/useGetUtil'
 
 describe('getSpeakers (Real API)', () => {
   //Increase timeout for test
@@ -27,27 +26,25 @@ describe('getSpeakers (Real API)', () => {
   });
 
   test('useGetSpeakers', async () => {
-    const wrapper = useTanstackQueryWrapper()
 
-    // Act
-    const renderHookResult = renderHook(() => useGetSpeakers(), { wrapper })
+    const renderHookResult = renderHook(() => useGetSpeakers())
+    await waitisNotGetting(renderHookResult)
     await act(async () => {
-      await waitForLoadingToFinish(renderHookResult)
+      const {result: { current: { get }}} = renderHookResult
+      get()
+      await waitisNotGetting(renderHookResult)
     })
-
-
-    
-    const { result: {current: { error, data }} } = renderHookResult
+    const { result: {current: { error,  speakers}} } = renderHookResult
 
     if(error){
       expect(error).toBeUndefined()
     }
-    if (data) {
-      expect(Array.isArray(data)).toBe(true)
-      console.log(`speakers: ${data.length}`)
-      expect(data.length).toBeGreaterThan(0)
+    if (speakers) {
+      expect(Array.isArray(speakers)).toBe(true)
+      console.log(`speakers: ${speakers.length}`)
+      expect(speakers.length).toBeGreaterThan(0)
     } else {
-      expect(data).toBeDefined()
+      expect(speakers).toBeDefined()
     }
   })
 })
