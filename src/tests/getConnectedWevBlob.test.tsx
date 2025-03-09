@@ -54,8 +54,8 @@ describe('getConnectetWevBlob (Real API)', () => {
     const renderHookResult = renderHook(() => useGetConnectetWevBlob())
     await waitisNotGetting(renderHookResult)
     await act(async () => {
-      const {result: { current: { get }}} = renderHookResult
-      get({
+      const {result: { current: { getConnectetWavBlob }}} = renderHookResult
+      getConnectetWavBlob({
         blobs: [blobA, blobB]
       })
       await waitisNotGetting(renderHookResult)

@@ -29,12 +29,7 @@ export const getWavBlobs = async ({
 }
 
 export type UseGetWebBlobsReturn = {
-  get: ({
-    speaker,
-    audioQueries,
-    core_version,
-    enable_interrogative_upspeak
-  }: GetWavBlobsProps) => void
+  getWavBlobs: (props: GetWavBlobsProps) => void
   blob: Blob|undefined
 } & UseGetReturnBase
 
@@ -43,7 +38,7 @@ export const useGetWavBlobs = () => {
   const [blob, setBlob] = useState<Blob|undefined>()
   const [error, setError] = useState<any>()
 
-  const get = ({
+  const _getWavBlobs = ({
     speaker,
     audioQueries,
     core_version,
@@ -67,7 +62,7 @@ export const useGetWavBlobs = () => {
   }
 
  return {
-  get,
+  getWavBlobs: _getWavBlobs,
   isGetting,
   error,
   blob

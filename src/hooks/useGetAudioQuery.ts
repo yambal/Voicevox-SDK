@@ -24,7 +24,7 @@ export const getAudioQuery = async ({
 }
 
 export type UseGetAudioQueryReturn = {
-  get: ({
+  getAudioQuery: ({
     text,
     speaker,
     core_version
@@ -37,7 +37,7 @@ export const useGetAudioQuery = () => {
   const [audioQuery, setAudioQuery] = useState<AudioQuery|undefined>()
   const [error, setError] = useState<any>()
 
-  const get = ({
+  const _getAudioQuery = ({
     text,
     speaker,
     core_version
@@ -59,7 +59,7 @@ export const useGetAudioQuery = () => {
   }
 
  return {
-  get,
+  getAudioQuery: _getAudioQuery,
   isGetting,
   error,
   audioQuery

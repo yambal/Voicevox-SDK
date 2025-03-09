@@ -43,8 +43,8 @@ describe('getAudioQuery (Real API)', () => {
     const renderHookResult = renderHook(() => useGetAudioQuery())
     await waitisNotGetting(renderHookResult)
     await act(async () => {
-      const {result: { current: { get }}} = renderHookResult
-      get({
+      const {result: { current: { getAudioQuery }}} = renderHookResult
+      getAudioQuery({
         text,
         speaker
       })

@@ -11,7 +11,7 @@ export const getSpeakers = async () => {
 }
 
 export type useGetSpeakersReturn = {
-  get:() => void
+  getSpeakers:() => void
   speakers?: Speaker[]
 } & UseGetReturnBase
 
@@ -20,7 +20,7 @@ export const useGetSpeakers = () => {
   const [speakers, setSpakers] = useState<Speaker[]|undefined>()
   const [error, setError] = useState<any>()
 
-  const get = () => {
+  const _getSpeakers = () => {
     setIsGetting(true)
     setError(undefined)
     setSpakers(undefined)
@@ -35,7 +35,7 @@ export const useGetSpeakers = () => {
   }
 
  return {
-  get,
+  getSpeakers: _getSpeakers,
   isGetting,
   error,
   speakers

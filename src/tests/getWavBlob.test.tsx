@@ -39,8 +39,8 @@ describe('getWavBlob (Real API)', () => {
     const renderHookResult = renderHook(() => useGetWavBlob())
     await waitisNotGetting(renderHookResult)
     await act(async () => {
-      const {result: { current: { get }}} = renderHookResult
-      get({
+      const {result: { current: { getWavBlob }}} = renderHookResult
+      getWavBlob({
         speaker,
         audioQuery
       })

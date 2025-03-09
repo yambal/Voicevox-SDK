@@ -1,6 +1,6 @@
 {
   "name": "voicebox-sdk",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A TypeScript SDK for interacting with the Voicebox API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

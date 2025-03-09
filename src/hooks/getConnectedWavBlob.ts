@@ -21,7 +21,7 @@ export const getConnectetWavBlob = async ({
 }
 
 export type UseGetConnectetWevBlobReturn = {
-  get: (props: GetConnectetWavBlobProps) => void
+  getConnectetWavBlob: (props: GetConnectetWavBlobProps) => void
   blob: Blob | undefined
 } & UseGetReturnBase
 
@@ -30,7 +30,7 @@ export const useGetConnectetWevBlob = () => {
   const [blob, setBlob] = useState<Blob|undefined>()
   const [error, setError] = useState<any>()
 
-  const get = ({
+  const _getConnectetWavBlob = ({
     blobs
   }: GetConnectetWavBlobProps) => {
     setIsGetting(true)
@@ -48,7 +48,7 @@ export const useGetConnectetWevBlob = () => {
   }
 
  return {
-  get,
+  getConnectetWavBlob: _getConnectetWavBlob,
   isGetting,
   error,
   blob

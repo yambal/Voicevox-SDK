@@ -30,8 +30,8 @@ describe('getSpeakers (Real API)', () => {
     const renderHookResult = renderHook(() => useGetSpeakers())
     await waitisNotGetting(renderHookResult)
     await act(async () => {
-      const {result: { current: { get }}} = renderHookResult
-      get()
+      const {result: { current: { getSpeakers }}} = renderHookResult
+      getSpeakers()
       await waitisNotGetting(renderHookResult)
     })
     const { result: {current: { error,  speakers}} } = renderHookResult

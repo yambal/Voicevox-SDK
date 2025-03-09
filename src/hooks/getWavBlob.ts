@@ -29,7 +29,7 @@ export const getWavBlob = async ({
 }
 
 export type UseGetWebBlobReturn = {
-  get: ({
+  getWavBlob: ({
     speaker,
     audioQuery,
     core_version,
@@ -43,7 +43,7 @@ export const useGetWavBlob = () => {
   const [blob, setBlob] = useState<Blob|undefined>()
   const [error, setError] = useState<any>()
 
-  const get = ({
+  const _getWavBlob = ({
     speaker,
     audioQuery,
     core_version,
@@ -67,7 +67,7 @@ export const useGetWavBlob = () => {
   }
 
  return {
-  get,
+  getWavBlob: _getWavBlob,
   isGetting,
   error,
   blob
